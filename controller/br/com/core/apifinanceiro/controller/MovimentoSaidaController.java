@@ -73,7 +73,7 @@ public class MovimentoSaidaController extends ControllerImp<MovimentoSaida> {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
 	@RequestMapping(value = "/quitarfatura", method = RequestMethod.PUT)
-	public ResponseEntity<Void> quitarfatura(@Validated @RequestBody FaturaDto objDto) {
+	public ResponseEntity<Void> quitarfatura(@RequestBody FaturaDto objDto) {
 		service.quitarFatura(objDto);
 
 		return ResponseEntity.ok().build();

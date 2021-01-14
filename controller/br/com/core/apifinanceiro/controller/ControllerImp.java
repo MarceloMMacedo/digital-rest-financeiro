@@ -6,6 +6,7 @@ import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,9 +28,9 @@ import br.com.core.apifinanceiro.services.ServiceImpl;
 import br.com.core.dbcore.FuncaoEnum;
 import br.com.core.dbcore.Perfil;
 import br.com.core.dbcore.domain.intefaces.BaseEntity;
+import net.sf.jasperreports.engine.JRException;
 
 public class ControllerImp<T extends BaseEntity> implements ControllerInterfaces<T>, Serializable {
- 
 
 	/**
 	 * 
@@ -41,7 +42,6 @@ public class ControllerImp<T extends BaseEntity> implements ControllerInterfaces
 	public ServiceImpl<T> service() {
 		return null;
 	}
-
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
 	@Override
@@ -84,11 +84,11 @@ public class ControllerImp<T extends BaseEntity> implements ControllerInterfaces
 
 	@Override
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
-	@RequestMapping(value = "/{id}",method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Validated @RequestBody T objDto, @PathVariable Integer id) {
 
-		T obj = service().update( objDto); // obj.setId(id);
-																											// obj =
+		T obj = service().update(objDto); // obj.setId(id);
+											// obj =
 		return ResponseEntity.noContent().build();
 	}
 
@@ -109,45 +109,53 @@ public class ControllerImp<T extends BaseEntity> implements ControllerInterfaces
 
 	@Override
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
-	public ResponseEntity<String> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file, @PathVariable Integer id)  throws IOException {
+	public ResponseEntity<String> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file,
+			@PathVariable Integer id) throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
-	@RequestMapping(value = "/baseall",method = RequestMethod.GET)
-	public ResponseEntity<List<BaseDto>> findBaseAll() { 
+	@RequestMapping(value = "/baseall", method = RequestMethod.GET)
+	public ResponseEntity<List<BaseDto>> findBaseAll() {
 		return ResponseEntity.ok(service().findBaseAll());
 	}
- 
-	@Override	
-	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
-	@RequestMapping(value = "/perfils",method = RequestMethod.GET)
-	public ResponseEntity<List<String>> getRules() {
-		List<String> lista= new LinkedList<>();
-		for(Perfil perfil: Perfil.values()) {
-			lista.add(perfil.getDescricao());
-		}
-		return   ResponseEntity.ok(lista);
-	}
- 
+
 	@Override
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
-	@RequestMapping(value = "/funcoes",method = RequestMethod.GET)
-	public ResponseEntity<List<String>> getfuncaoes() {
-		List<String> lista= new LinkedList<>();
-		for(FuncaoEnum perfil: FuncaoEnum.values()) {
+	@RequestMapping(value = "/perfils", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getRules() {
+		List<String> lista = new LinkedList<>();
+		for (Perfil perfil : Perfil.values()) {
 			lista.add(perfil.getDescricao());
 		}
-		return   ResponseEntity.ok(lista);
+		return ResponseEntity.ok(lista);
+	}
+
+	@Override
+	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
+	@RequestMapping(value = "/funcoes", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getfuncaoes() {
+		List<String> lista = new LinkedList<>();
+		for (FuncaoEnum perfil : FuncaoEnum.values()) {
+			lista.add(perfil.getDescricao());
+		}
+		return ResponseEntity.ok(lista);
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service().delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@Override
+	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
+	@RequestMapping(value = "/viewpdf", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewpdf() throws JRException, IOException {
+
+		return ResponseEntity.ok(service().ViewPdf());
+	}
 }

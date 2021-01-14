@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.apirestfinanceiro.services.exceptions.AuthorizationException;
+import br.com.apirestfinanceiro.services.util.UtilParameter;
 import br.com.core.apifinanceiro.CentroCustoRepository;
 import br.com.core.apifinanceiro.ContasBancoRepository;
 import br.com.core.apifinanceiro.FaturaRepository;
@@ -536,6 +537,7 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 		if (obj.getStatus().equals(StatusActiv.QUIT.getDescricao())) {
 			throw new AuthorizationException("Este paagamento já foi realizado");
 		}
+		obj.setDataQuitacao(objDto.getDataquitacao());
 		obj.setDesconto(objDto.getDesconto());
 		obj.setFuncionario(funcionariosRepository.findById(user.getId()).get());
 		/*
@@ -550,6 +552,12 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 			banco.setSaldo(banco.getSaldo() - obj.getTotal());
 			banco = bancoRepository.save(banco);
 		}
+
+		obj.setBancopagador(banco);
+		obj.setNumerodocumento(objDto.getNumerodocumento());
+		obj.setFormapagamento(objDto.getFormapagamento());
+		obj.setMulta(objDto.getMulta());
+		obj.setDesconto(objDto.getDesconto());
 		// 2- saldo no centro de custo
 		CentroCusto centroCusto = centroCustoRepository.findById(obj.getHistorico().getCentrocusto().getId()).get();
 		if (centroCusto.getSaldo() < obj.getTotal()) {

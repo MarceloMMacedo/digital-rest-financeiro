@@ -21,7 +21,7 @@ public interface MovimentoContratoRepository extends JpaRepository<MovimentoCont
 
 	 
 	@Transactional(readOnly = true)
-	@Query( "SELECT c.id AS id, c.name AS historico  FROM MovimentoContrato AS c where c.status=?1 GROUP BY c.id ")
+	@Query( "SELECT c.id AS id, c.name AS historico    FROM MovimentoContrato AS c where c.status=?1 GROUP BY c.id ")
 	List<Object[]> movimentosByFaturas(String status);
 	
 	@Transactional(readOnly = true)

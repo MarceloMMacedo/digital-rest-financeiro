@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,12 +24,11 @@ import br.com.core.apifinanceiro.dto.BaseDto;
 import br.com.core.apifinanceiro.interfaces.ServicesInterfaces;
 import br.com.core.apifinanceiro.security.UserSS;
 import br.com.core.dbcore.domain.intefaces.BaseEntity;
+import net.sf.jasperreports.engine.JRException;
 
 public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	 
 
 	@Value("${jwt.secret}")
 	private static String secret;
@@ -123,18 +125,16 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 
 	@Override
 	public T findByEmail(String email) {
-		
+
 		return null;
 	}
 
 	@Override
 	public Page<T> findPage(String name, Integer page, Integer linesPerPage, String orderBy, String direction) {
-		
+
 		return null;
 	}
 
-	
-	
 	@Override
 	public String uploadProfilePicture(MultipartFile file, Integer id, String fieldname) {
 		Field fldfonte = null;
@@ -150,7 +150,7 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 			value = fldfonte.get(obj);
 
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
-			
+
 			e1.printStackTrace();
 		}
 		fldfonte.setAccessible(true);
@@ -166,7 +166,7 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 		try {
 			fldfonte.set(obj, filename);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			
+
 			e.printStackTrace();
 		}
 		update(obj);
@@ -174,7 +174,7 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 		try {
 			return filesService.downloadFile(filename);
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 		return fieldname;
@@ -182,7 +182,7 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 
 	@Override
 	public List<T> findAllName(String name) {
-		
+
 		return null;
 	}
 
@@ -202,18 +202,18 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 				value = fldfonte.get(obj);
 				String s = (String) value;
 				if (s == null || s == "null" || s == "" || s.equals(null) || s.equals("null") || s.equals("")) {
-				//	fldview.set(obj, "");
+					// fldview.set(obj, "");
 				} else
 					try {
 						fldview.set(obj, filesService.downloadFile(s));
 					} catch (IOException e) {
-						
+
 						e.printStackTrace();
 					}
 			}
 
 		} catch (Exception e) {
-			
+
 		}
 		return list;
 	}
@@ -232,66 +232,60 @@ public class ServiceImpl<T extends BaseEntity> implements ServicesInterfaces<T>,
 			value = fldfonte.get(obj);
 			String s = (String) value;
 			if (s == null || s == "null" || s == "" || s.equals(null) || s.equals("null") || s.equals("")) {
-				//fldview.set(obj, "");
+				// fldview.set(obj, "");
 			} else {
 				fldview.set(obj, filesService.downloadFile(s));
 			}
 		} catch (Exception e) {
-			
+
 		}
 
 		return obj;
 	}
 
 	@Override
-	public List<BaseDto > findBaseAll() {
+	public List<BaseDto> findBaseAll() {
 		return null;
-		/*UserSS user = UserService.authenticated();
-		if (user == null) {
-			throw new AuthorizationException("Acesso negado");
-		}
-		List<T> find = repo().findAll();
-		List<BaseDto > baseDto = new ArrayList<>();
-		for (T t : find) {
-			baseDto.add(new BaseDto<T>(t));
-		}
-		return baseDto;*/
+		/*
+		 * UserSS user = UserService.authenticated(); if (user == null) { throw new
+		 * AuthorizationException("Acesso negado"); } List<T> find = repo().findAll();
+		 * List<BaseDto > baseDto = new ArrayList<>(); for (T t : find) {
+		 * baseDto.add(new BaseDto<T>(t)); } return baseDto;
+		 */
 	}
 
 	@Override
 	public List<BaseDto> SetListBaseImg(String FieldImage, String FieldView, List<T> list) {
 		return null;
-	/*	Field fldfonte = null;
-		Field fldview = null;
-		Object value = null;
-		List<BaseDto<T>> baseDto = new ArrayList<>();
-		try {
-
-			fldfonte = getClasse().getDeclaredField(FieldImage);
-			fldview = getClasse().getDeclaredField(FieldView);
-
-			for (T obj : list) {
-				fldfonte.setAccessible(true);
-				fldview.setAccessible(true);
-				value = fldfonte.get(obj);
-				String s = (String) value;
-				if (s == null || s == "null" || s == "" || s.equals(null) || s.equals("null") || s.equals("")) {
-					//fldview.set(obj, "");
-				} else
-					try {
-						fldview.set(obj, filesService.downloadFile(s));
-					} catch (IOException e) {
-						
-						e.printStackTrace();
-					}
-				baseDto.add(new BaseDto<T>(obj));
-			}
-
-		} catch (Exception e) {
-			
-		}
-
-		return baseDto;*/
+		/*
+		 * Field fldfonte = null; Field fldview = null; Object value = null;
+		 * List<BaseDto<T>> baseDto = new ArrayList<>(); try {
+		 * 
+		 * fldfonte = getClasse().getDeclaredField(FieldImage); fldview =
+		 * getClasse().getDeclaredField(FieldView);
+		 * 
+		 * for (T obj : list) { fldfonte.setAccessible(true);
+		 * fldview.setAccessible(true); value = fldfonte.get(obj); String s = (String)
+		 * value; if (s == null || s == "null" || s == "" || s.equals(null) ||
+		 * s.equals("null") || s.equals("")) { //fldview.set(obj, ""); } else try {
+		 * fldview.set(obj, filesService.downloadFile(s)); } catch (IOException e) {
+		 * 
+		 * e.printStackTrace(); } baseDto.add(new BaseDto<T>(obj)); }
+		 * 
+		 * } catch (Exception e) {
+		 * 
+		 * }
+		 * 
+		 * return baseDto;
+		 */
 	}
 
+	@Override
+	public byte[] ViewPdf() throws JRException, IOException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		List<?> source = new ArrayList<>();
+		String templates = "";
+		
+		return filesService.ViewPdf(parameters, source, templates);
+	}
 }

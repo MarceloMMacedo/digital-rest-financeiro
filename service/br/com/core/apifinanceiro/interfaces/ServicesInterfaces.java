@@ -1,12 +1,15 @@
 package br.com.core.apifinanceiro.interfaces;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.core.apifinanceiro.dto.BaseDto;
 import br.com.core.dbcore.domain.intefaces.BaseEntity;
+import net.sf.jasperreports.engine.JRException;
 
 public interface ServicesInterfaces<T extends BaseEntity> {
 
@@ -39,4 +42,6 @@ public interface ServicesInterfaces<T extends BaseEntity> {
 	public List<BaseDto> findBaseAll();
 
 	public List<BaseDto> SetListBaseImg(String FieldImage, String FieldView, List<T> list);
+
+	public byte[] ViewPdf() throws JRException, IOException;
 }

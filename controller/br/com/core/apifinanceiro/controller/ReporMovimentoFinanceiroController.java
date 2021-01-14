@@ -1,5 +1,6 @@
 package br.com.core.apifinanceiro.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.core.apifinanceiro.dto.ResumoMovimentoFinaneiro;
+import br.com.core.apifinanceiro.dto.demonstrativo.DemosntrativoFinanceiroDto;
 import br.com.core.apifinanceiro.services.ReporMovimentoFinanceiroService;
+import net.sf.jasperreports.engine.JRException;
 
 
 @Controller
@@ -23,11 +26,24 @@ public class ReporMovimentoFinanceiroController implements Serializable {
 	@Autowired
 	ReporMovimentoFinanceiroService service;
 	
+	
 	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
 	@RequestMapping( method = RequestMethod.GET)
 	public ResponseEntity<ResumoMovimentoFinaneiro> resumoexercicios() { 
 		return ResponseEntity.ok(service.resumoexercicios());
 	}
  
-
+	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
+	@RequestMapping(value = "/demonstrativoatual", method = RequestMethod.GET)
+	public ResponseEntity<DemosntrativoFinanceiroDto> demonstrativoatual() { 
+		return ResponseEntity.ok(service.demonstrativoatual());
+	}
+ 
+	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
+	@RequestMapping(value = "/printdemonstrativo",method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewpdf( )
+			throws JRException, IOException {
+		 
+		return   ResponseEntity.ok( service.ViewPdf() );
+	}
 }

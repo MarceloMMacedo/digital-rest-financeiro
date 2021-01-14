@@ -1,5 +1,6 @@
 package br.com.core.apifinanceiro.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,13 +8,20 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.SerializableString;
+
 import br.com.core.dbcore.domain.financeiro.movimento.Fatura;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FaturaDto {
+public class FaturaDto implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	

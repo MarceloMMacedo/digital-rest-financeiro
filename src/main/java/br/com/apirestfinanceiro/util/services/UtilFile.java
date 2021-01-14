@@ -68,9 +68,7 @@ public class UtilFile implements FilesService, Serializable {
 	@Override
 	public byte[] ViewPdf(Map<String, Object> parameters, List<?> source, String templates)
 			throws JRException, IOException {
-		return null;
-
-		// return createPdfReport(parameters, source, templates);
+		 return createPdfReport(parameters, source, templates);
 	}
 
 	public byte[] createPdfReport(Map<String, Object> parameters, List<?> source, String templates)
@@ -106,7 +104,7 @@ public class UtilFile implements FilesService, Serializable {
 		InputStream stream = this.getClass().getResourceAsStream(templates);
 
 		// Compile the Jasper report from .jrxml to .japser final
-		JasperReport report = JasperCompileManager.compileReport(stream);
+		JasperReport report = JasperCompileManager.compileReport(templates);
 
 		// Fetching the employees from the data source. final
 		JRBeanCollectionDataSource source$ = new JRBeanCollectionDataSource(source);
