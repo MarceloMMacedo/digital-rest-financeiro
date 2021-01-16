@@ -80,10 +80,12 @@ public interface FaturaRepository extends JpaRepository<Fatura, Integer> {
 	@Query(value = "SELECT" + "  (SELECT m.id FROM grupo_financeiro m WHERE m.id = f.historico_id) AS id,"
 			+ "  (SELECT m.name FROM grupo_financeiro m WHERE m.id = f.historico_id) AS movimentofinanceiro,"
 			+ "  f.name AS descricaofatura,"
-			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 2 and tipomovimento = :tipoMovimento and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes and f.historico_id = historico_id GROUP BY historico_id), 0) AS valorrealizar,"
-			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 3 and tipomovimento = :tipoMovimento and EXTRACT(YEAR FROM data_quitacao) = :ano AND EXTRACT(MONTH FROM data_quitacao) = :mes and f.historico_id = historico_id GROUP BY historico_id), 0) AS valorrealizado"
+			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 2 and tipomovimento = :tipoMovimento and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes and f.historico_id = historico_id ), 0) AS valorrealizar,"
+			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 3 and tipomovimento = :tipoMovimento and EXTRACT(YEAR FROM data_quitacao) = :ano AND EXTRACT(MONTH FROM data_quitacao) = :mes and f.historico_id = historico_id ), 0) AS valorrealizado"
 			+ " FROM  Fatura f" + " WHERE " + "  f.tipomovimento = :tipoMovimento AND"
-			+ "  EXTRACT(YEAR FROM f.data_vencimento) =:ano AND" + "  EXTRACT(MONTH FROM f.data_vencimento) = :mes"
+			+ " ( EXTRACT(YEAR FROM f.data_vencimento) = :ano or EXTRACT(YEAR FROM f.data_quitacao) = :ano) AND  "
+			+ " ( EXTRACT(MONTH FROM f.data_vencimento) = :mes or  EXTRACT(MONTH FROM f.data_quitacao) = :mes)  " 
+			 
 			+ "  GROUP BY  f.historico_id", nativeQuery = true)
 	List<Object[]> faturasdemosntrativofinanceiro(@Param("tipoMovimento") int tipoMovimento, @Param("ano") int ano,
 			@Param("mes") int mes);

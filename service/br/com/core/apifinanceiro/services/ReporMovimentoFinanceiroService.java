@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -140,6 +141,94 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 
 		demonstrativo.setSaidarealizados(saidas);
 
+		demonstrativo.setExercicio(ano);
+		return demonstrativo;
+
+	}
+
+	public DemosntrativoFinanceiroDto demonstrativoatual(int ano, int mes) {
+		DemosntrativoFinanceiroDto demonstrativo = new DemosntrativoFinanceiroDto();
+		// selecionar data
+
+		// entradarealizados Resumo
+
+		String tipomovimento_descricao = TipoMovimentoEnum.entradaContrato.getDescricao();
+		int tipomovimento_id = TipoMovimentoEnum.entradaContrato.getId();
+
+		List<Object[]> objects = new ArrayList<>();
+
+		List<ItemDemosntrativoFinanceiroDto> entradas = new ArrayList<>();
+
+		objects = faturaRepository.faturasdemosntrativofinanceiro(tipomovimento_id, ano, mes);
+		for (Object[] obj : objects) {
+			ItemDemosntrativoFinanceiroDto e = new ItemDemosntrativoFinanceiroDto(obj[0], obj[1], obj[2], obj[3],
+					obj[4]);
+			entradas.add(e);
+		}
+
+		// entradasarealizar a Realizar
+		List<ItemDemosntrativoFinanceiroDto> movimentosaberto = new ArrayList<>();
+
+		objects = faturaRepository.faturasItensdemosntrativofinanceiro(ano, mes);
+		for (Object[] obj : objects) {
+			ItemDemosntrativoFinanceiroDto e = new ItemDemosntrativoFinanceiroDto(obj[0], obj[1], obj[2], obj[3],
+					obj[4], obj[5]);
+			demonstrativo.getMovimentosAberto().add(e);
+		}
+		// Entrada OS Resumo
+
+		tipomovimento_descricao = TipoMovimentoEnum.EntradaOrdemServico.getDescricao();
+		tipomovimento_id = TipoMovimentoEnum.EntradaOrdemServico.getId();
+
+		List<ItemDemosntrativoFinanceiroDto> entradarealizadosos = new ArrayList<>();
+		objects = faturaRepository.faturasdemosntrativofinanceiro(tipomovimento_id, ano, mes);
+		for (Object[] obj : objects) {
+			ItemDemosntrativoFinanceiroDto e = new ItemDemosntrativoFinanceiroDto(obj[0], obj[1], obj[2], obj[3],
+					obj[4]);
+			entradarealizadosos.add(e);
+		}
+		for (ItemDemosntrativoFinanceiroDto itemDemosntrativoFinanceiroDto : entradarealizadosos) {
+			entradas.add(itemDemosntrativoFinanceiroDto);
+		}
+
+		// Saida Resumo
+
+		tipomovimento_descricao = TipoMovimentoEnum.Saida.getDescricao();
+		tipomovimento_id = TipoMovimentoEnum.Saida.getId();
+
+		List<ItemDemosntrativoFinanceiroDto> saidas = new ArrayList<>();
+		objects = faturaRepository.faturasdemosntrativofinanceiro(tipomovimento_id, ano, mes);
+		for (Object[] obj : objects) {
+			ItemDemosntrativoFinanceiroDto e = new ItemDemosntrativoFinanceiroDto(obj[0], obj[1], obj[2], obj[3],
+					obj[4]);
+			saidas.add(e);
+		}
+		// entradasarealizar a Realizar
+
+		double realizados = 0;
+		double futuros = 0;
+		for (ItemDemosntrativoFinanceiroDto item : entradas) {
+			realizados += item.getValorrealizado();
+			futuros += item.getValorrealizar();
+		}
+		demonstrativo.setEstradasRealizadas(realizados);
+		demonstrativo.setEstradasFuturas(futuros);
+
+		realizados = 0;
+		futuros = 0;
+		for (ItemDemosntrativoFinanceiroDto item : saidas) {
+			realizados += item.getValorrealizado();
+			futuros += item.getValorrealizar();
+		}
+		demonstrativo.setSaidasRealizadas(realizados);
+		demonstrativo.setSaidasFuturas(futuros);
+
+		demonstrativo.setEntradarealizados(entradas);
+
+		demonstrativo.setSaidarealizados(saidas);
+
+		demonstrativo.setExercicio(ano);
+		demonstrativo.setMes(mes); 
 		return demonstrativo;
 
 	}
@@ -164,6 +253,72 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 		String templates = res.getURI().getPath() + "/demonstrativo.jrxml";
 		List<DemosntrativoFinanceiroDto> list = new ArrayList<DemosntrativoFinanceiroDto>();
 		list.add(demonstrativoatual());
+		source = list;
+		return filesService.ViewPdf(parameters, source, templates);
+	}
+
+	public byte[] ViewPdf(int ano, int mes) throws JRException, IOException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String s = "";
+		Resource res = resourceLoader.getResource("classpath:/templates/report/demonstrativofinanceiro/");
+		try {
+			s = res.getURI().getPath();
+			System.out.println(res.getURI());
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		parameters.put("pathentrada", s + "/entradas.jasper");
+		parameters.put("pathsaida", s + "/saidas.jasper");
+		parameters.put("PathMovimento", s + "/movimentoaberto.jasper");
+
+		List<?> source = new ArrayList<>();
+
+		String templates = res.getURI().getPath() + "/demonstrativo.jrxml";
+		List<DemosntrativoFinanceiroDto> list = new ArrayList<DemosntrativoFinanceiroDto>();
+		list.add(demonstrativoatual(ano, mes));
+		source = list;
+		return filesService.ViewPdf(parameters, source, templates);
+	}
+
+	public byte[] viewpddemonstrativosintetico() throws JRException, IOException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String s = "";
+		Resource res = resourceLoader.getResource("classpath:/templates/report/demonstrativofinanceiro/");
+		try {
+			s = res.getURI().getPath();
+			System.out.println(res.getURI());
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		List<?> source = new ArrayList<>();
+
+		String templates = res.getURI().getPath() + "resumodemonstrativosintetico.jrxml";
+		List<ReportDemostrativoFinancerio> list = new LinkedList<ReportDemostrativoFinancerio>();
+		list = (reportdemostrativofinancerio());
+		source = list;
+		return filesService.ViewPdf(parameters, source, templates);
+	}
+
+	public byte[] viewpddemonstrativosintetico(int exercicio) throws JRException, IOException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String s = "";
+		Resource res = resourceLoader.getResource("classpath:/templates/report/demonstrativofinanceiro/");
+		try {
+			s = res.getURI().getPath();
+			System.out.println(res.getURI());
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		List<?> source = new ArrayList<>();
+
+		String templates = res.getURI().getPath() + "resumodemonstrativosintetico.jrxml";
+		List<ReportDemostrativoFinancerio> list = new LinkedList<ReportDemostrativoFinancerio>();
+		list = (reportdemostrativofinancerio(exercicio));
 		source = list;
 		return filesService.ViewPdf(parameters, source, templates);
 	}
@@ -193,18 +348,45 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 		return reportdemostrativofinancerio;
 	}
 
+	public List<ReportDemostrativoFinancerio> reportdemostrativofinancerio(int exercicio) {
+		List<ReportDemostrativoFinancerio> reportdemostrativofinancerio = new ArrayList<ReportDemostrativoFinancerio>();
+		/*
+		 * List<Object[]> faturasExercicioSomentedemosntrativofinanceiro =
+		 * faturaRepository .faturasExercicioSomentedemosntrativofinanceiro();
+		 * 
+		 * for (Object[] objects : faturasExercicioSomentedemosntrativofinanceiro)
+		 */
+		{
+			ReportDemostrativoFinancerio demostrativoFinancerio = new ReportDemostrativoFinancerio(exercicio);
+			demostrativoFinancerio.setJan(setMes(1, exercicio));
+			demostrativoFinancerio.setFev(setMes(2, exercicio));
+			demostrativoFinancerio.setMar(setMes(3, exercicio));
+			demostrativoFinancerio.setAbr(setMes(4, exercicio));
+			demostrativoFinancerio.setMai(setMes(5, exercicio));
+			demostrativoFinancerio.setJun(setMes(6, exercicio));
+			demostrativoFinancerio.setJul(setMes(7, exercicio));
+			demostrativoFinancerio.setAgo(setMes(8, exercicio));
+			demostrativoFinancerio.setSet(setMes(9, exercicio));
+			demostrativoFinancerio.setOut(setMes(10, exercicio));
+			demostrativoFinancerio.setNov(setMes(11, exercicio));
+			demostrativoFinancerio.setDez(setMes(12, exercicio));
+			reportdemostrativofinancerio.add(demostrativoFinancerio);
+		}
+
+		return reportdemostrativofinancerio;
+	}
+
 	private ItemMesDemostrativoDTO setMes(int mes, int exercicio) {
 		ItemMesDemostrativoDTO setMes = new ItemMesDemostrativoDTO();
 		List<Object[]> faLists = faturaRepository.faturasSomenteItensdemosntrativofinanceiro(exercicio, mes);
 		setMes.setExercicio(exercicio);
 		setMes.setMes(mes);
-		Object[] faList=faLists.get(0);
-		 setMes.setValoresSaidaAberto( (Double) faList[0]);
-		setMes.setValoresSaidaQuit( (Double) faList[1]);
-		setMes.setValoresEntradaAberto( (Double) faList[2]);
-		setMes.setValoresEntradaQuit( (Double) faList[3]);
-		
-		
+		Object[] faList = faLists.get(0);
+		setMes.setValoresSaidaAberto((Double) faList[0]);
+		setMes.setValoresSaidaQuit((Double) faList[1]);
+		setMes.setValoresEntradaAberto((Double) faList[2]);
+		setMes.setValoresEntradaQuit((Double) faList[3]);
+
 		return setMes;
 	}
 }

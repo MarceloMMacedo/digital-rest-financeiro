@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class DemosntrativoFinanceiroDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private int exercicio;
+	private int mes;
 	private List<ItemDemosntrativoFinanceiroDto> entradarealizados = new ArrayList<>();
 	private List<ItemDemosntrativoFinanceiroDto> entradasFuturo = new ArrayList<>();
 	private List<ItemDemosntrativoFinanceiroDto> saidarealizados = new ArrayList<>();

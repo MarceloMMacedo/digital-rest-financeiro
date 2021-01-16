@@ -47,6 +47,12 @@
 	<field name="estradasFuturas" class="java.lang.Double">
 		<fieldDescription><![CDATA[estradasFuturas]]></fieldDescription>
 	</field>
+	<field name="exercicio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[exercicio]]></fieldDescription>
+	</field>
+	<field name="mes" class="java.lang.Integer">
+		<fieldDescription><![CDATA[mes]]></fieldDescription>
+	</field>
 	<variable name="saidasFuturas1" class="java.lang.Double" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{saidasFuturas}]]></variableExpression>
 	</variable>
@@ -63,14 +69,24 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="46" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<staticText>
-				<reportElement x="20" y="10" width="524" height="30" uuid="7ec3d6e1-0460-4bf0-b52b-30cef9e56766"/>
+				<reportElement x="20" y="10" width="210" height="20" uuid="7ec3d6e1-0460-4bf0-b52b-30cef9e56766"/>
 				<textElement verticalAlignment="Middle">
-					<font size="19"/>
+					<font size="13"/>
 				</textElement>
-				<text><![CDATA[Demonstrativo Financeiro]]></text>
+				<text><![CDATA[Demonstrativo Financeiro Período:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="239" y="10" width="150" height="20" uuid="29ec460f-2108-4f7d-a08e-6cbd0bc0c4c2">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}+"/"+$F{exercicio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -258,10 +274,12 @@
 			</staticText>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="85" y="34" width="65" height="15" uuid="d00277fb-8df3-4212-b65c-ff28571cfb26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estradasRealizadas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="150" y="34" width="65" height="15" uuid="a7c589a6-8fd0-46ac-a939-a356f5134a73"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estradasFuturas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
@@ -269,6 +287,7 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{saidasRealizadas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
@@ -278,6 +297,7 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{saidasFuturas}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -291,10 +311,12 @@
 			</staticText>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="150" y="64" width="65" height="15" uuid="dd647608-0d36-41d7-b4e7-f6dd9d17f309"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{faturamentosFuturas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="85" y="64" width="65" height="15" uuid="9e062499-ddf0-4b72-9b76-8477419d59e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{faturamentosRealizadas}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -308,6 +330,7 @@
 			</staticText>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="85" y="80" width="65" height="15" uuid="efa1479a-d707-4a75-9476-9e23eb127372"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -318,7 +341,7 @@
 				<box>
 					<leftPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
@@ -333,6 +356,7 @@
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{saidasFuturas} + $F{saidasRealizadas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
@@ -340,6 +364,7 @@
 				<box>
 					<leftPen lineWidth="1.0"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estradasFuturas} + $F{estradasRealizadas}]]></textFieldExpression>
 			</textField>
 		</band>
