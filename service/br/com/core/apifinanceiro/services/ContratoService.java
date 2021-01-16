@@ -252,6 +252,7 @@ public class ContratoService extends ServiceImpl<Contrato> {
 				StatusActiv.ABERTO.getDescricao());
 		if (movement == null) {
 			movement = new MovimentoContrato();
+			movement.setDataMovimento(new Date());
 			movement.setStatus(StatusActiv.ABERTO.getDescricao());
 			movement.setTipomovimento(TipoMovimentoEnum.entradaContrato.getDescricao());
 		}
@@ -337,6 +338,7 @@ public class ContratoService extends ServiceImpl<Contrato> {
 			itemmovimento.setStatus(StatusActiv.ABERTO.getDescricao());
 			itemmovimento.setMovimentoFinanceiro(movement);
 			itemmovimento.setContrato(contrato);
+			itemmovimento.setDataMovimento(movement.getDataMovimento());
 			itemmovimento.setTipomovimento(TipoMovimentoEnum.entradaContrato.getDescricao());
 
 			/*

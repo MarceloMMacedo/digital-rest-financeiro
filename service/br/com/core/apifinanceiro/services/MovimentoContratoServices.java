@@ -432,7 +432,6 @@ public class MovimentoContratoServices extends ServiceImpl<MovimentoContrato> im
 		Fatura obj = faturaRepository.findById(objDto.getId()).get();
 		// List<FichaLeitura>
 		// fichaLeitura=fichaLeituraRepository.findAllByFaturaId(obj.getId()) ;
-		
 
 		for (FichaLeituraDto fichaLeituraDto : objDto.getFichaLeitura()) {
 			FichaLeitura fichaLeitura = fichaLeituraRepository.findById(fichaLeituraDto.getId()).get();
@@ -450,7 +449,8 @@ public class MovimentoContratoServices extends ServiceImpl<MovimentoContrato> im
 
 		List<AgregadoFinanceiroDto> valoresContrato = new ArrayList<>();
 		AgregadoFinanceiroDto agregadoFinanceiro = new AgregadoFinanceiroDto(
-				contrato.getFinanceiroContrato().getCentrocusto().getId(), contrato.getFinanceiroContrato().getCentrocusto().getName(),
+				contrato.getFinanceiroContrato().getCentrocusto().getId(),
+				contrato.getFinanceiroContrato().getCentrocusto().getName(),
 				contrato.getFinanceiroContrato().getPercentualComplamento(), objDto.getValor());
 		valoresContrato.add(agregadoFinanceiro);
 
@@ -459,8 +459,6 @@ public class MovimentoContratoServices extends ServiceImpl<MovimentoContrato> im
 					financeiro.getCentrocusto().getName(), financeiro.getPercentual(), objDto.getValor());
 			valoresContrato.add(agregadoFinanceiro);
 		}
-
-		 
 
 		/*
 		 * validação 1 - saldo em conta; 2- saldo no centro de custo;
@@ -475,21 +473,21 @@ public class MovimentoContratoServices extends ServiceImpl<MovimentoContrato> im
 			banco = bancoRepository.save(banco);
 		}
 		// 2- saldo no centro de custo
-		 
+
 		for (AgregadoFinanceiroDto agregadoFinanceiroDto : valoresContrato) {
 			CentroCusto centroCusto = centroCustoRepository.findById(agregadoFinanceiroDto.getId()).get();
 			centroCusto.setSaldo(centroCusto.getSaldo() + agregadoFinanceiroDto.getValor());
 			centroCusto.setSaldoReceber(centroCusto.getSaldoReceber() - agregadoFinanceiroDto.getValor());
 			centroCusto = centroCustoRepository.save(centroCusto);
-		}  
-		 
+		}
+
 		obj.setDataQuitacao(objDto.getDataquitacao());
 		obj.setBancopagador(banco);
 		obj.setFormapagamento(objDto.getFormapagamento());
 
 		obj.setStatus(StatusActiv.QUIT.getDescricao());
 		obj = faturaRepository.save(obj);
-		movimentoContrato = find(obj.getMovimentoFinanceiro().getId()); 
+		movimentoContrato = find(obj.getMovimentoFinanceiro().getId());
 		if (movimentoContrato.getFaturasAberto().size() == 0) {
 			movimentoContrato.setStatus(StatusActiv.QUIT.getDescricao());
 			movimentoContrato = repo.save(movimentoContrato);

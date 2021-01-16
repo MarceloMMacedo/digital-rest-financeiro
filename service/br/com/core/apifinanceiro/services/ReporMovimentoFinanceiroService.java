@@ -19,6 +19,8 @@ import br.com.core.apifinanceiro.FaturaRepository;
 import br.com.core.apifinanceiro.dto.ResumoMovimentoFinaneiro;
 import br.com.core.apifinanceiro.dto.demonstrativo.DemosntrativoFinanceiroDto;
 import br.com.core.apifinanceiro.dto.demonstrativo.ItemDemosntrativoFinanceiroDto;
+import br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO;
+import br.com.core.apifinanceiro.dto.demonstrativo.ReportDemostrativoFinancerio;
 import br.com.core.dbcore.TipoMovimentoEnum;
 import net.sf.jasperreports.engine.JRException;
 
@@ -83,7 +85,7 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 		objects = faturaRepository.faturasItensdemosntrativofinanceiro(ano, mes);
 		for (Object[] obj : objects) {
 			ItemDemosntrativoFinanceiroDto e = new ItemDemosntrativoFinanceiroDto(obj[0], obj[1], obj[2], obj[3],
-					obj[4],obj[5]);
+					obj[4], obj[5]);
 			demonstrativo.getMovimentosAberto().add(e);
 		}
 		// Entrada OS Resumo
@@ -102,8 +104,6 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 			entradas.add(itemDemosntrativoFinanceiroDto);
 		}
 
-		 
-
 		// Saida Resumo
 
 		tipomovimento_descricao = TipoMovimentoEnum.Saida.getDescricao();
@@ -117,7 +117,7 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 			saidas.add(e);
 		}
 		// entradasarealizar a Realizar
-		
+
 		double realizados = 0;
 		double futuros = 0;
 		for (ItemDemosntrativoFinanceiroDto item : entradas) {
@@ -136,10 +136,9 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 		demonstrativo.setSaidasRealizadas(realizados);
 		demonstrativo.setSaidasFuturas(futuros);
 
-		demonstrativo.setEntradarealizados(entradas); 
+		demonstrativo.setEntradarealizados(entradas);
 
 		demonstrativo.setSaidarealizados(saidas);
-		 
 
 		return demonstrativo;
 
@@ -167,5 +166,45 @@ public class ReporMovimentoFinanceiroService implements Serializable {
 		list.add(demonstrativoatual());
 		source = list;
 		return filesService.ViewPdf(parameters, source, templates);
+	}
+
+	public List<ReportDemostrativoFinancerio> reportdemostrativofinancerio() {
+		List<ReportDemostrativoFinancerio> reportdemostrativofinancerio = new ArrayList<ReportDemostrativoFinancerio>();
+		List<Object[]> faturasExercicioSomentedemosntrativofinanceiro = faturaRepository
+				.faturasExercicioSomentedemosntrativofinanceiro();
+
+		for (Object[] objects : faturasExercicioSomentedemosntrativofinanceiro) {
+			ReportDemostrativoFinancerio demostrativoFinancerio = new ReportDemostrativoFinancerio((int) objects[0]);
+			demostrativoFinancerio.setJan(setMes(1, (int) objects[0]));
+			demostrativoFinancerio.setFev(setMes(2, (int) objects[0]));
+			demostrativoFinancerio.setMar(setMes(3, (int) objects[0]));
+			demostrativoFinancerio.setAbr(setMes(4, (int) objects[0]));
+			demostrativoFinancerio.setMai(setMes(5, (int) objects[0]));
+			demostrativoFinancerio.setJun(setMes(6, (int) objects[0]));
+			demostrativoFinancerio.setJul(setMes(7, (int) objects[0]));
+			demostrativoFinancerio.setAgo(setMes(8, (int) objects[0]));
+			demostrativoFinancerio.setSet(setMes(9, (int) objects[0]));
+			demostrativoFinancerio.setOut(setMes(10, (int) objects[0]));
+			demostrativoFinancerio.setNov(setMes(11, (int) objects[0]));
+			demostrativoFinancerio.setDez(setMes(12, (int) objects[0]));
+			reportdemostrativofinancerio.add(demostrativoFinancerio);
+		}
+
+		return reportdemostrativofinancerio;
+	}
+
+	private ItemMesDemostrativoDTO setMes(int mes, int exercicio) {
+		ItemMesDemostrativoDTO setMes = new ItemMesDemostrativoDTO();
+		List<Object[]> faLists = faturaRepository.faturasSomenteItensdemosntrativofinanceiro(exercicio, mes);
+		setMes.setExercicio(exercicio);
+		setMes.setMes(mes);
+		Object[] faList=faLists.get(0);
+		 setMes.setValoresSaidaAberto( (Double) faList[0]);
+		setMes.setValoresSaidaQuit( (Double) faList[1]);
+		setMes.setValoresEntradaAberto( (Double) faList[2]);
+		setMes.setValoresEntradaQuit( (Double) faList[3]);
+		
+		
+		return setMes;
 	}
 }

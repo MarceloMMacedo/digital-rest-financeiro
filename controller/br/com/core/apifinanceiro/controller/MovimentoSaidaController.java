@@ -1,6 +1,7 @@
 package br.com.core.apifinanceiro.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.Parameter;
@@ -22,6 +23,7 @@ import br.com.core.apifinanceiro.dto.MovimentoFinanceiroDto;
 import br.com.core.apifinanceiro.dto.ResumoContasMovimento;
 import br.com.core.apifinanceiro.services.MovimentoSaidaServices;
 import br.com.core.apifinanceiro.services.ServiceImpl;
+import br.com.core.dbcore.StatusActiv;
 import br.com.core.dbcore.domain.financeiro.movimento.MovimentoSaida;
 
 @RestController
@@ -98,7 +100,9 @@ public class MovimentoSaidaController extends ControllerImp<MovimentoSaida> {
 
 	@Override
 	public ResponseEntity<Integer> insert(MovimentoSaida objDto) {
-		// TODO Auto-generated method stub
+
+		objDto.setDataMovimento(new Date());
+		objDto.setStatus(StatusActiv.ABERTO.getDescricao());
 		return super.insert(objDto);
 	}
 

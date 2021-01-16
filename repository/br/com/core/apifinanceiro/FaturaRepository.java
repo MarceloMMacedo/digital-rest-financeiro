@@ -77,15 +77,12 @@ public interface FaturaRepository extends JpaRepository<Fatura, Integer> {
 
 	// DemosntrativoFinanceiro
 
-	@Query(value = "SELECT"
-			+ "  (SELECT m.id FROM grupo_financeiro m WHERE m.id = f.historico_id) AS id,"
+	@Query(value = "SELECT" + "  (SELECT m.id FROM grupo_financeiro m WHERE m.id = f.historico_id) AS id,"
 			+ "  (SELECT m.name FROM grupo_financeiro m WHERE m.id = f.historico_id) AS movimentofinanceiro,"
 			+ "  f.name AS descricaofatura,"
 			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 2 and tipomovimento = :tipoMovimento and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes and f.historico_id = historico_id GROUP BY historico_id), 0) AS valorrealizar,"
 			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 3 and tipomovimento = :tipoMovimento and EXTRACT(YEAR FROM data_quitacao) = :ano AND EXTRACT(MONTH FROM data_quitacao) = :mes and f.historico_id = historico_id GROUP BY historico_id), 0) AS valorrealizado"
-			+ " FROM  Fatura f" 
-			+ " WHERE "
-			+ "  f.tipomovimento = :tipoMovimento AND"
+			+ " FROM  Fatura f" + " WHERE " + "  f.tipomovimento = :tipoMovimento AND"
 			+ "  EXTRACT(YEAR FROM f.data_vencimento) =:ano AND" + "  EXTRACT(MONTH FROM f.data_vencimento) = :mes"
 			+ "  GROUP BY  f.historico_id", nativeQuery = true)
 	List<Object[]> faturasdemosntrativofinanceiro(@Param("tipoMovimento") int tipoMovimento, @Param("ano") int ano,
@@ -98,10 +95,20 @@ public interface FaturaRepository extends JpaRepository<Fatura, Integer> {
 			+ "  f.name AS descricaofatura,"
 			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 2 and tipomovimento <>2 and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes  and id= f.id ), 0) AS valorrealizar,"
 			+ "  IFNULL((SELECT SUM(valor + jurus + multa - desconto) AS valor FROM fatura where status = 2 and tipomovimento = 2 and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes  and id= f.id ), 0) AS valorrealizado,"
-			+ "  f.data_vencimento as data " 
-			+ "  FROM   Fatura f " 
-			+ "  WHERE f.status=2 and "
+			+ "  f.data_vencimento as data " + "  FROM   Fatura f " + "  WHERE f.status=2 and "
 			+ "  EXTRACT(YEAR FROM f.data_vencimento) =:ano AND  " + "  EXTRACT(MONTH FROM f.data_vencimento) = :mes "
 			+ "  GROUP BY  f.id", nativeQuery = true)
 	List<Object[]> faturasItensdemosntrativofinanceiro(@Param("ano") int ano, @Param("mes") int mes);
+
+	@Query(value = "SELECT YEAR(f.data_movimento) AS exercicio FROM fatura f GROUP BY YEAR(f.data_movimento)", nativeQuery = true)
+	List<Object[]> faturasExercicioSomentedemosntrativofinanceiro();
+	
+	@Query(value = " SELECT  "
+			+ "  ifnull((SELECT sum(valor + jurus + multa - desconto) AS FIELD_1 FROM fatura WHERE status = 2 and tipomovimento = 2 and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes), 0) AS valoresSaidaAberto, "
+			+ "  IFNULL((SELECT sum(valor + jurus + multa - desconto) AS FIELD_1 FROM fatura WHERE status = 3 and tipomovimento = 2 and EXTRACT(YEAR FROM data_quitacao) = :ano AND EXTRACT(MONTH FROM data_quitacao) = :mes), 0) AS valoresSaidaQuit, "
+			+ "  ifnull((SELECT sum(valor + jurus + multa - desconto) AS FIELD_1 FROM fatura WHERE status = 2 and tipomovimento = 1 and EXTRACT(YEAR FROM data_vencimento) = :ano AND EXTRACT(MONTH FROM data_vencimento) = :mes), 0) AS valoresEntradaAberto, "
+			+ "  IFNULL((SELECT sum(valor + jurus + multa - desconto) AS FIELD_1 FROM fatura WHERE status = 3 and tipomovimento = 1 and EXTRACT(YEAR FROM data_quitacao) = :ano AND EXTRACT(MONTH FROM data_quitacao) = :mes), 0) AS valoresEntradaSaidaQuit "
+			 , nativeQuery = true)
+	List<Object[]> faturasSomenteItensdemosntrativofinanceiro(@Param("ano") int ano, @Param("mes") int mes);
+
 }

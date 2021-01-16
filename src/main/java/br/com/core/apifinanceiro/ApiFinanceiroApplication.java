@@ -31,8 +31,8 @@ public class ApiFinanceiroApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
- intTable.intTable();
+	//	intTable.intTable();
 		Timer t = new Timer();
-		//t.schedule(task, 1, 1000000);
+		// t.schedule(task, 1, 1000000);
 	}
 }

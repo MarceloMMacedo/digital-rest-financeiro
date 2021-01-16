@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.core.apifinanceiro.dto.ResumoMovimentoFinaneiro;
 import br.com.core.apifinanceiro.dto.demonstrativo.DemosntrativoFinanceiroDto;
+import br.com.core.apifinanceiro.dto.demonstrativo.ReportDemostrativoFinancerio;
 import br.com.core.apifinanceiro.services.ReporMovimentoFinanceiroService;
 import net.sf.jasperreports.engine.JRException;
 
@@ -45,5 +46,10 @@ public class ReporMovimentoFinanceiroController implements Serializable {
 			throws JRException, IOException {
 		 
 		return   ResponseEntity.ok( service.ViewPdf() );
+	}
+	@PreAuthorize("hasAnyRole('ROLE_ADMG' , 'ROLE_OPF' , 'ROLE_ADMEST'  )")
+	@RequestMapping(value = "/reportdemostrativofinancerio", method = RequestMethod.GET)
+	public ResponseEntity<List<ReportDemostrativoFinancerio>> reportdemostrativofinancerio() { 
+		return ResponseEntity.ok(service.reportdemostrativofinancerio());
 	}
 }

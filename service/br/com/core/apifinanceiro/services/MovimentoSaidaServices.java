@@ -443,12 +443,13 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 	public MovimentoSaida gerarparcelasCPagar(Integer id) {
 		MovimentoSaida movement = new MovimentoSaida();
 		movement = repo.findById(id).get();
+		if (movement.getDataMovimento() == null)
+			movement.setDataMovimento(new Date());
 		movement.setTipomovimento(TipoMovimentoEnum.Saida.getDescricao());
 
 		if (movement.getStatus().equals(StatusActiv.ABERTO.getDescricao())) {
 			movement.setTipomovimento(TipoMovimentoEnum.Saida.getDescricao());
- 
- 
+
 			DateTime plusPeriod = new DateTime(movement.getDataVencimento());// dt.plus(Period.months(1));
 			DateTime plusPeriodleitura = new DateTime();
 			// DateTime plusDuration = dt.plus(new Duration(24L * 60L * 60L *
@@ -476,8 +477,6 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 
 				dayOfWeekEndDateNumber = Integer.valueOf(plusPeriodleitura.dayOfWeek().getAsString());
 
-				 
-				
 				itemmovimento.setName(movement.getName());
 				itemmovimento.setParcela(indiceparcalas.get(i));
 				itemmovimento.setValor(movement.getValor() / j);
@@ -488,6 +487,7 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 				itemmovimento.setHistorico(movement.getHistorico());
 				itemmovimento.setNaturezamovimento(NaturezaMovimentoEnum.Saida.getDescricao());
 				itemmovimento.setTipomovimento(TipoMovimentoEnum.Saida.getDescricao());
+				itemmovimento.setDataMovimento(movement.getDataMovimento());
 				itemmovimento = faturaRepository.save(itemmovimento);
 				centroCusto.setSaldoPagar(centroCusto.getSaldoPagar() + (movement.getValor() / j));
 
@@ -572,7 +572,7 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 
 		// String s = uploadProfilePicture(objDto.getFile(), objDto.getId(),
 		// "imagemfatura");
-		 
+
 		obj.setDataQuitacao(objDto.getDataquitacao());
 		obj.setBancopagador(banco);
 		obj.setFormapagamento(objDto.getFormapagamento());
@@ -652,8 +652,8 @@ public class MovimentoSaidaServices extends ServiceImpl<MovimentoSaida> implemen
 		MovimentoSaida movimentoSaida = repo.findById(id).get();
 		MovimentoFinanceiroDto financeiroDto = new MovimentoFinanceiroDto(movimentoSaida);
 		for (Fatura fatura : movimentoSaida.getFaturasAberto()) {
-			FaturaDto f =new FaturaDto();
-			f=faturaDto(fatura.getId());
+			FaturaDto f = new FaturaDto();
+			f = faturaDto(fatura.getId());
 			financeiroDto.getFaturas().add(f);
 		}
 		return financeiroDto;
