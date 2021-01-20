@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.core.apifinanceiro.config.services.UserDetailsServiceImpl;
-import br.com.core.apifinanceiro.services.ContratoService;
 import br.com.core.apifinanceiro.services.MovimentoSaidaServices;
 import br.com.core.dbcore.SimNaoEnum;
 import br.com.core.dbcore.StatusActiv;
