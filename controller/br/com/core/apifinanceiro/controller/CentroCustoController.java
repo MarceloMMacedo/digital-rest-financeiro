@@ -1,9 +1,6 @@
 package br.com.core.apifinanceiro.controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.core.apifinanceiro.services.CentroCustoService;
 import br.com.core.apifinanceiro.services.ServiceImpl;
-import br.com.core.dbcore.Perfil;
 import br.com.core.dbcore.domain.financeiro.CentroCusto;
 import net.sf.jasperreports.engine.JRException;
 
