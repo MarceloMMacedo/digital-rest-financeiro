@@ -29,7 +29,7 @@
 	<field name="cpfOnCnpj" class="java.lang.String">
 		<fieldDescription><![CDATA[cpfOnCnpj]]></fieldDescription>
 	</field>
-	<field name="enderecoPrincipal" class="br.com.core.dbcore.domain.pessoas.EnderecoEmpresas">
+	<field name="enderecoPrincipal" class="br.com.apifinanceiro.domain.pessoas.EnderecoEmpresas">
 		<fieldDescription><![CDATA[enderecoPrincipal]]></fieldDescription>
 	</field>
 	<field name="name" class="java.lang.String">

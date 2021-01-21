@@ -31,10 +31,10 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.Storage.SignUrlOption;
 
-import br.com.core.apifinanceiro.config.services.UserService;
-import br.com.core.apifinanceiro.security.UserSS;
-import br.com.core.apifinanceiro.services.EmpresaService;
-import br.com.core.dbcore.domain.pessoas.Empresas;
+import br.com.apifinanceiro.config.services.UserService;
+import br.com.apifinanceiro.domain.pessoas.Empresas;
+import br.com.apifinanceiro.security.UserSS;
+import br.com.apifinanceiro.services.EmpresaService;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;

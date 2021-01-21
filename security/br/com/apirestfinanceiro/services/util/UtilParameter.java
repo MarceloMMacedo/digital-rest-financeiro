@@ -12,8 +12,8 @@ import org.springframework.data.annotation.Transient;
 
 import com.br.appcore.util.DataClintecnpj;
 
+import br.com.apifinanceiro.domain.intefaces.BaseEntity;
 import br.com.apirestfinanceiro.services.exceptions.AuthorizationException;
-import br.com.core.dbcore.domain.intefaces.BaseEntity;
 
 public class UtilParameter {
 

@@ -9,7 +9,7 @@
 		<version>2.4.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.core</groupId>
+	<groupId>br.com</groupId>
 	<artifactId>api-financeiro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-financeiro</name>
@@ -17,7 +17,7 @@
 
 	<properties>
 		
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<spring-cloud-gcp.version>2.0.0-RC2</spring-cloud-gcp.version>
 		<spring-cloud.version>2020.0.0-M6</spring-cloud.version>
 	</properties>

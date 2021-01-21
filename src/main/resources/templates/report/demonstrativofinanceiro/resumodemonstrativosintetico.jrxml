@@ -17,46 +17,46 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="jul" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="jul" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[jul]]></fieldDescription>
 	</field>
-	<field name="jun" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="jun" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[jun]]></fieldDescription>
 	</field>
-	<field name="set" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="set" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[set]]></fieldDescription>
 	</field>
-	<field name="ago" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="ago" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[ago]]></fieldDescription>
 	</field>
 	<field name="exercicio" class="java.lang.Integer">
 		<fieldDescription><![CDATA[exercicio]]></fieldDescription>
 	</field>
-	<field name="out" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="out" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[out]]></fieldDescription>
 	</field>
-	<field name="abr" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="abr" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[abr]]></fieldDescription>
 	</field>
-	<field name="mai" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="mai" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[mai]]></fieldDescription>
 	</field>
-	<field name="nov" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="nov" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[nov]]></fieldDescription>
 	</field>
-	<field name="fev" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="fev" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[fev]]></fieldDescription>
 	</field>
-	<field name="jan" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="jan" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[jan]]></fieldDescription>
 	</field>
-	<field name="dez" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="dez" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[dez]]></fieldDescription>
 	</field>
 	<field name="mes" class="java.lang.Integer">
 		<fieldDescription><![CDATA[mes]]></fieldDescription>
 	</field>
-	<field name="mar" class="br.com.core.apifinanceiro.dto.demonstrativo.ItemMesDemostrativoDTO">
+	<field name="mar" class="br.com.apirestfinanceiro.repository.dto.demonstrativo.ItemMesDemostrativoDTO">
 		<fieldDescription><![CDATA[mar]]></fieldDescription>
 	</field>
 	<variable name="totalSaidasQuit" class="java.lang.Double" calculation="Sum">

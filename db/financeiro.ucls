@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="br.com.core.dbcore.domain.financeiro.movimento.Faturanto.Fatura" project="dbcore" 
+  <class id="1" language="java" name="br.com.apifinanceiro.domain.financeiro.movimento.Faturanto.Fatura" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/movimento/Fatura.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="763" y="678"/>    
@@ -11,7 +11,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="br.com.core.dbcore.domain.financeiro.GrupoFinanceiro" project="dbcore" 
+  <class id="2" language="java" name="br.com.apifinanceiro.domain.financeiro.GrupoFinanceiro" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/GrupoFinanceiro.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="180" y="739"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -20,7 +20,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="br.com.core.dbcore.domain.financeiro.AgregadoFinanceiro" project="dbcore" 
+  <class id="3" language="java" name="br.com.apifinanceiro.domain.financeiro.AgregadoFinanceiro" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/AgregadoFinanceiro.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="168" y="190"/>    
@@ -30,7 +30,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="br.com.core.dbcore.domain.financeiro.MovimentoBanco" project="dbcore" 
+  <class id="4" language="java" name="br.com.apifinanceiro.domain.financeiro.MovimentoBanco" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/MovimentoBanco.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="632" y="273"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -39,7 +39,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="br.com.core.dbcore.domain.financeiro.GrupoFinanceiroAnuncio" project="dbcore" 
+  <class id="5" language="java" name="br.com.apifinanceiro.domain.financeiro.GrupoFinanceiroAnuncio" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/GrupoFinanceiroAnuncio.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="135" y="1076"/>    
@@ -49,7 +49,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="br.com.core.dbcore.domain.financeiro.CentroCusto" project="dbcore" 
+  <class id="6" language="java" name="br.com.apifinanceiro.domain.financeiro.CentroCusto" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/CentroCusto.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="525" y="731"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -58,7 +58,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="br.com.core.dbcore.domain.financeiro.ContasBanco" project="dbcore" 
+  <class id="7" language="java" name="br.com.apifinanceiro.domain.financeiro.ContasBanco" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/ContasBanco.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="922" y="260"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -67,7 +67,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="br.com.core.dbcore.domain.financeiro.GrupoFinanceiroProduto" project="dbcore" 
+  <class id="8" language="java" name="br.com.apifinanceiro.domain.financeiro.GrupoFinanceiroProduto" project="dbcore" 
     file="/dbcore/domain/br/com/core/dbcore/domain/financeiro/GrupoFinanceiroProduto.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="358" y="1072"/>    
@@ -77,7 +77,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="9" language="java" name="br.com.core.dbcore.domain.intefaces.BaseEntity" project="dbcore" 
+  <interface id="9" language="java" name="br.com.apifinanceiro.domain.intefaces.BaseEntity" project="dbcore" 
     file="/dbcore/util/br/com/core/dbcore/domain/intefaces/BaseEntity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="460" y="-65"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
